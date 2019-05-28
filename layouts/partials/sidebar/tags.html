@@ -1,0 +1,13 @@
+{{ define "taxonomy" }}
+<section class="sidebar">
+	<header>{{ .key | upper }}</header>
+	<div>
+		<ul class="terms">
+			{{ range $key, $value := first 10 .value.ByCount }}<li><a href="{{ $.key | relURL }}/{{ .Name | urlize }}">{{ .Name }} <span class="count">({{ $value.Count }})</span></a></li>{{ end }}
+		</ul>
+	</div>
+</section>
+{{ end }}
+{{ with .Site.Taxonomies.tags }}
+{{ template "taxonomy" (dict "context" $.Site "key" "tags" "value" . "baseurl" $.Site.BaseURL) }}
+{{ end }}

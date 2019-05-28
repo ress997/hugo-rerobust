@@ -1,0 +1,9 @@
+<meta name="theme-color" content="#263238">
+<meta name="generator" content="Hugo {{ .Hugo.Version }}">
+{{ range .AlternativeOutputFormats -}}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="$.Site.Title | safeHTML">
+{{ end -}}
+{{ partial "head/ogp.html" . }}
+{{ if (fileExists "static/img/icon.png") }}
+<link rel="apple-touch-icon" href="{{ "img/icon.png" | relURL }}">
+{{ end }}

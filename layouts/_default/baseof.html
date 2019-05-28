@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    {{ partial "meta.html" . }}
-    {{ with .Site.Params.googlefonts }}
-    <link href="{{ . }}" rel="stylesheet">
-    {{ else }}
-    <link href="//fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-    {{ end }}
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>{{ block "title" . }}{{ end }}{{ .Site.Title }}</title>
-    {{ block "meta" . }}{{ end }}
-    <style>
-      {{ replaceRE " +" " " (replaceRE "\n" "" (partial "styles.css" .)) | safeCSS }}
-      {{ replaceRE " +" " " (replaceRE "\n" "" (partial "custom.css" .)) | safeCSS }}
-      {{ with .Site.Params.fontfamily }} body { font-family: {{ . | safeCSS }}; } {{ end }}
-      {{ with .Site.Params.logofontfamily }} .h-logo { font-family: {{ . | safeCSS }}; } {{ end }}
-    </style>
-  </head>
-
-  <body>
-    {{ if ne (getenv "HUGO_ENV") "DEV" }}
-    {{ template "_internal/google_analytics.html" . }}
-    {{ end }}
-
-    <header class="l-header">
-      <div class="l-container">
-        <div class="logo">
-          <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-        </div>
-        {{ partial "description.html" . }}
-      </div>
-    </header>
-
-    <main>
-      <div class="l-container">
-        {{ block "main" . }}{{ end }}
-      </div>
-    </main>
-
-    <footer class="l-footer">
-      <div class="l-container">
-        <p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}<span class="h-logo">&copy; {{ .Site.Title }}</span>{{ end }}</p>
-        <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-        </aside>
-      </div>
-    </footer>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-  </body>
+<head>
+	<meta charset="utf-8">
+	<link rel="canonical" href="{{ .Permalink }}">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<title>{{ block "title" . }}{{ end }}{{ .Site.Title }}</title>
+{{ partial "head.html" . }}
+{{ block "meta" . }}{{ end }}
+	<link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com"  crossorigin>
+	<link rel="dns-prefetch preconnect" href="https://use.fontawesome.com"  crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<style>
+{{ replaceRE " +" " " (replaceRE "\n" "" (partial "styles.css" .)) | safeCSS }}
+{{ if (fileExists "custom.css") }}
+{{ replaceRE " +" " " (replaceRE "\n" "" (readFile "/custom.css")) | safeCSS }}
+{{ end }}
+	</style>
+{{ if and .Site.GoogleAnalytics (not .Site.IsServer) }}
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', {{ .Site.GoogleAnalytics }}}, 'auto');
+ga('send', 'pageview');
+</script>
+{{ end }}
+</head>
+<body>
+	<header class="l-header">
+		<div class="l-container">
+			<h1 class="logo">
+				<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+			</h1>
+		{{ with .Site.Params.Description }}<div class="description">{{ . | markdownify }}</div>{{ end }}
+		</div>
+	</header>
+	<main>
+		<div class="l-container">
+			{{ block "main" . }}{{ end }}
+		</div>
+	</main>
+	<footer class="l-footer">
+		<div class="l-container">
+			<p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}&copy; {{ .Site.Title }}{{ end }}</p>
+			<aside>
+				<p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+				<p><a href="https://github.com/ress997/hugo-rerobust">Re Robust</a> is provided by <a href="https://x39.dev">Ress</a>.</p>
+			</aside>
+		</div>
+	</footer>
+<script src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+<script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+<script>const observer=lozad();observer.observe();</script>
+</body>
 </html>
-

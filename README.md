@@ -1,108 +1,76 @@
-```
-This theme is no longer maintained.
-```
+Re Robust
+===
+このテーマは [Robust](https://github.com/dim0627/hugo_theme_robust) をベースに作成しました。  
+基本的にデザインはそのままですが内部的に機能を強化しました
 
-# What is this.
+## 主な変更点
+- meta タグの整理
+- shortcode の追加
+- ライブラリの変更
+- RSS Feed の追加
+- custom.css の読み込み機能
+- シェアボタンの変更
 
-This is the grid based theme for Hugo.
+### shortcode について
+AMP へ対応と項目の追加しました。詳しくは [shortcode](#shortcode) へ
 
-[Hugo :: A fast and modern static website engine](https://gohugo.io/)
+### ライブラリについて
+- Font Awesome 5 へアップグレード
+- highlight.js の削除
 
-## PC View
+gist に対応したため highlight.js は廃止しました。
 
-![screenshot](https://raw.githubusercontent.com/dim0627/hugo_theme_robust/master/images/screenshot.png)
+どうしてもシンタックスハイライトが使用したい場合は [公式の highlight](https://gohugo.io/content-management/syntax-highlighting/) を使用してください。
+(ただしAMPページの場合エラーが発生します)
 
-## SP View(Responsive)
+### RSS Feed
+RSS Feed のテンプレートが存在してなかったため追加しました。
 
-![screenshot](https://raw.githubusercontent.com/dim0627/hugo_theme_robust/master/images/responsive.png)
+### custom.css
+custom.css が存在する場合ファイルを読み込みます
 
-# Features
+### シェアボタンについて
+シェアボタンのURLを更新し、非表示を可能にしました
+各シェアボタンを非表示するには以下のようにすることで可能です
 
-* [Accelerated Mobile Pages Project](https://www.ampproject.org/) a.k.a AMP supported
-* Responsive design
-* Google Analytics
-* Thumbnail
-* Share button
-* Structured data(Article and Breadcrumb)
-* Twitter cards
-* OGP
-* Disqus
-* Syntax Highlight
-
-## Installation
-
-```
-$ cd themes
-$ git clone https://github.com/dim0627/hugo_theme_robust.git
-```
-
-[Hugo \- Installing Hugo](http://gohugo.io/overview/installing/)
-
-# `config.toml` example
-
-```
-baseurl = "https://example.com/"
-title = "SiteTitle"
-theme = "hugo_theme_robust"
-
-googleAnalytics = "UA-XXXXXXXX-XX" # Optional
-disqusShortname = "XYW"
-
-[params]
-  description = "This is site description"
-  dateformat = "Jan 2, 2006" # Optional
-  # Fonts settings.
-  googlefonts = "https://fonts.googleapis.com/css?family=Lobster|Lato:400,700" # Optional, Include google fonts.
-  fontfamily = "Lato,YuGothic,'Hiragino Kaku Gothic Pro',Meiryo,sans-serif" # Optional, Override body font family.
-  logofontfamily = "Lobster, cursive" # Optional, Override logo font.
-
-[params.author]
-  thumbnail = "images/author.jpg"
-  name = "John Doe"
-  description = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p><p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-  facebook = "https://www.facebook.com/daisuke.tsuji.735"
-  twitter = "https://twitter.com/dim0627"
-  github = "https://github.com/dim0627"
-
-[outputs]
-page = [ "HTML", "AMP" ] # if you want AMP enable.
+```toml
+[Params]
+# はてなブックマーク
+socialShareHatena = false
+# Twitter
+socialShareTwitter = false
+# Facebook
+socialShareFacebook = false
+# Google Plus
+socialShareGoogleplus = false
+# Pocket
+socialSharePocket = false
+# LINE
+socialShareLine = false
 ```
 
-# Frontmatter example
+シェアボタン自体を非表示にするには以下のようにすることで可能です
 
-```
-+++
-date = "2016-09-28T17:00:00+09:00"
-title = "Article title here"
-thumbnail = "images/thumbnail.jpg" # Optional, referenced at `$HUGO_ROOT/static/images/thumbnail.jpg`
-toc = true # Optional
-+++
+```toml
+[Params]
+socialShare = false
 ```
 
-# Shortcodes
+## shortcode
+一部 shortcode は公式のものを使用しています。
 
-## Image
+### Gist
+`{{< gist id="gistID" file="file" >}}`
 
-```
-{{% img src="images/image.jpg" w="600" h="400" %}}
-{{% img src="images/image.jpg" w="600" h="400" caption="Referenced from wikipedia." href="https://en.wikipedia.org/wiki/Lorem_ipsum" %}}
-```
+### Twitter
+`{{< twitter id >}}`
 
-![screenshot](https://raw.githubusercontent.com/dim0627/hugo_theme_robust/master/images/include-images.png)
+AMPに対応しました
 
-# Development mode
+### YouTube
+`{{< youtube id >}}`
+`{{< youtube id autoplay="true" >}}`
 
-Supported development mode.
+ID は `https://www.youtube.com/watch?v=` 以降の英数字です
 
-```
-env HUGO_ENV="DEV" hugo server --watch --buildDrafts=true --buildFuture=true -t robust
-```
-
-This mode is
-
-* Not show Google Analytics tags.
-* Show `IsDraft`.
-* Show `WordCount`.
-
-And set `{{ if ne (getenv "HUGO_ENV") "DEV" }} Set elements here. {{ end }}` if you want to place only in a production environment.
-
+AMPに対応しました
